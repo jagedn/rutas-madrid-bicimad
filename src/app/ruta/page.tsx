@@ -67,7 +67,6 @@ export default function RutaPage() {
         const getInitialRoute = async () => {
             setLoadingRoute(true);
             try {
-                // Paso 1: Buscar el monumento más cercano
                 const resNearby = await fetch(`/api/nearby?lat=${coords.latitude}&lng=${coords.longitude}`);
                 const place = await resNearby.json();
 
@@ -93,7 +92,7 @@ export default function RutaPage() {
     useEffect(() => {
         if (!isTracking) return;
 
-        if (routeData && !hasWelcomed) {
+        if (!hasWelcomed) {
             const txt = `Ruta lista. Coge tu bici en ${routeData.originStation.name}. Tienes ${routeData.originStation.bikes} disponibles. Tu primera parada es ${nearestPlace?.title}.`;
             speak(txt);
             setHasWelcomed(true);
