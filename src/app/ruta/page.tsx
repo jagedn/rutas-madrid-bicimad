@@ -92,7 +92,7 @@ export default function RutaPage() {
     useEffect(() => {
         if (!isTracking) return;
 
-        if (!hasWelcomed) {
+        if (routeData && !hasWelcomed) {
             const txt = `Ruta lista. Coge tu bici en ${routeData.originStation.name}. Tienes ${routeData.originStation.bikes} disponibles. Tu primera parada es ${nearestPlace?.title}.`;
             speak(txt);
             setHasWelcomed(true);
