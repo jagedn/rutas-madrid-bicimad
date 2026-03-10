@@ -25,14 +25,15 @@ export default function RutaPage() {
             const utterance = new SpeechSynthesisUtterance(text);
             const voices = window.speechSynthesis.getVoices();
 
-            const preferredVoice = voices.find(v =>
-                v.name.includes('Andrea') || v.name.includes('Google español'));
+            const preferredVoice = voices.find(v => v.lang === 'es-ES' && v.localService) ||
+                voices.find(v => v.lang.startsWith('es'));
             if (preferredVoice) utterance.voice = preferredVoice;
 
             utterance.lang = 'es-ES';
             utterance.rate = 0.9;
             utterance.onstart = () => setIsSpeaking(true);
             utterance.onend = () => setIsSpeaking(false);
+            utterance.onerror = () => setIsSpeaking(false);
             window.speechSynthesis.speak(utterance);
         }
     }, []);
@@ -57,7 +58,7 @@ export default function RutaPage() {
     };
 
     const handleStartRoute = () => {
-        speak("Buscando ruta...");
+        speak("Iniciando sistema. Por favor, espera un momento mientras configuro tu ruta temática.");
         startTracking();
     };
 
